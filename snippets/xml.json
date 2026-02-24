@@ -1,0 +1,974 @@
+{
+  "rel": {
+    "prefix": "rel",
+    "body": "[rel $1]$2"
+  },
+  "note": {
+    "prefix": "note",
+    "body": "<note>${1:START COMMENT}</note>"
+  },
+  "static": {
+    "prefix": "static",
+    "body": "http://69.20.5.96/survey/\\${gv.survey.path\\}/${1:image}"
+  },
+  "cdata": {
+    "prefix": "cdata",
+    "body": [
+      "<![CDATA[",
+      "    ${1:foo}",
+      "]]>",
+      ""
+    ]
+  },
+  "br": {
+    "prefix": "br",
+    "body": "<br />"
+  },
+  "brbr": {
+    "prefix": "brbr",
+    "body": "<br /><br />"
+  },
+  "popup": {
+    "prefix": "popup",
+    "body": [
+      "<a href=\"#popup-${1:img1}\" class=\"popup-link\">(POP-UP LINK HERE)</a>",
+      "<div id=\"popup-$1\" class=\"popup mfp-hide\" style=\"max-width:960px\">(POP-UP CONTENT HERE)</div>",
+      ""
+    ]
+  },
+  "question.after": {
+    "prefix": "question.after",
+    "body": [
+      "<style name=\"question.after\" wrap=\"ready\">",
+      "  <![CDATA[",
+      "    var qn = \\${jsexport()\\}; //json object",
+      "",
+      "    var \\$qn = \\$ (\"#question_\" + qn.label);",
+      "    ${1://some code}",
+      "  ]]>",
+      "</style>",
+      "$2"
+    ]
+  },
+  "css": {
+    "prefix": "css",
+    "body": [
+      "<style name=\"respview.client.css\">",
+      "  <![CDATA[",
+      "    <link rel=\"stylesheet\" href=\"[rel ${1:file}.css]\" type=\"text/css\" charset=\"utf-8\"/>",
+      "  ]]>",
+      "</style>",
+      "$2",
+      ""
+    ]
+  },
+  "js": {
+    "prefix": "js",
+    "body": [
+      "<style name=\"respview.client.js\">",
+      "  <![CDATA[",
+      "    <script type=\"text/javascript\" src=\"[rel ${1:file}.js]\"></script>",
+      "  ]]>",
+      "</style>",
+      "$2",
+      ""
+    ]
+  },
+  "question.footer": {
+    "prefix": "question.footer",
+    "body": [
+      "<style name=\"question.footer\" mode=\"after\"><![CDATA[",
+      "<style>",
+      "</style>",
+      "",
+      "<script>",
+      "\\$ (document).ready(function () {",
+      "\t$1",
+      "\\});",
+      "</script>",
+      "]]></style>"
+    ]
+  },
+  "nota": {
+    "prefix": "nota",
+    "body": "None of the Above"
+  },
+  "dk": {
+    "prefix": "dk",
+    "body": "Don't Know / Not Applicable"
+  },
+  "pipe": {
+    "prefix": "pipe",
+    "body": "[pipe: ${1:Q1}]"
+  },
+  "and": {
+    "prefix": "and",
+    "body": "&amp;"
+  },
+  "tm": {
+    "prefix": "tm",
+    "body": "&#8482;"
+  },
+  "reg": {
+    "prefix": "reg",
+    "body": [
+      "&#174;",
+      ""
+    ]
+  },
+  "res": {
+    "prefix": "res",
+    "body": "<res label=\"$1\">$2</res>"
+  },
+  "exec": {
+    "prefix": "exec",
+    "body": [
+      "<exec>",
+      "$1",
+      "</exec>",
+      "$2"
+    ]
+  },
+  "validate": {
+    "prefix": "validate",
+    "body": [
+      "<validate>",
+      "$1",
+      "</validate>",
+      "$2"
+    ]
+  },
+  "validateOE": {
+    "prefix": "validateOE",
+    "body": [
+      "<validate>",
+      "OtherSpecify('${1:r996}')",
+      "</validate>"
+    ]
+  },
+  "validateOELen": {
+    "prefix": "validateOELen",
+    "body": [
+      "<validate>",
+      "checkOthLen(code='${1:r996}', chklen=2, chkdupes=0, chkseq=0)",
+      "</validate>"
+    ]
+  },
+  "virtual": {
+    "prefix": "virtual",
+    "body": [
+      "<virtual>",
+      "$1",
+      "</virtual>",
+      "$2"
+    ]
+  },
+  "term": {
+    "prefix": "term",
+    "body": "<term cond=\"${3:Q1.r2}\" label=\"term_${1:Q1}\">Terminate ${1: Q1}: ${2: None of the above selected}</term>"
+  },
+  "softterm": {
+    "prefix": "softterm",
+    "body": [
+      "<condition label=\"$1_term\" cond=\"$2\" />",
+      "<html label=\"SoftTerm_$1\" cond=\"qTesting.r1 and condition.$1_term\" where=\"survey\" translateable=\"0\">",
+      "\t\\${res.softTerm\\}<br/><b>$1</b>",
+      "</html>",
+      "<suspend />",
+      "",
+      "<term label=\"termEOS_$1\" cond=\"condition.$1_term\">$3</term>"
+    ]
+  },
+  "quota": {
+    "prefix": "quota",
+    "body": "<quota sheet=\"${1:Quota}\" label=\"$2\"/>"
+  },
+  "marker": {
+    "prefix": "marker",
+    "body": "<marker name=\"${1:foo}\"/>"
+  },
+  "block": {
+    "prefix": "block",
+    "body": [
+      "<block label=\"${1:label}\" randomizeChildren=\"${2:0}\" cond=\"${3:1}\">",
+      "   $4",
+      "</block>"
+    ]
+  },
+  "init": {
+    "prefix": "init",
+    "body": [
+      "<exec when=\"${1:init}\">",
+      "</exec>"
+    ]
+  },
+  "group": {
+    "prefix": "group",
+    "body": "<group label=\"g${1:1}\" ${2:where=\"none\"}></group>"
+  },
+  "net": {
+    "prefix": "net",
+    "body": [
+      "<net label=\"$1\" labels=\"$2\">$3</net>\t",
+      ""
+    ]
+  },
+  "condition": {
+    "prefix": "condition",
+    "body": "<condition label=\"${1:foo}\" cond=\"${2:bar}\">${3:baz}</condition>"
+  },
+  "qtables": {
+    "prefix": "qtables",
+    "body": "<label onLoad=\"createQuotaTables()\"/>"
+  },
+  "ttables": {
+    "prefix": "ttables",
+    "body": "<label onLoad=\"createTerminateTables()\"/>"
+  },
+  "datasource": {
+    "prefix": "datasource",
+    "body": [
+      "<datasource datasourceKey=\"${1:source}\"",
+      "    ourKey=\"${2:source}\"",
+      "    label=\"${3:ds1}\"",
+      "    filename=\"$4\"",
+      "    storedVariables=\"$5\"",
+      "    normalizeKey=\"none\"/>"
+    ]
+  },
+  "vstatus": {
+    "prefix": "vstatus",
+    "body": [
+      "<radio label=\"vStatus\" title=\"Respondent Status\">",
+      "<virtual>",
+      "if 'recovered' in markers:",
+      "    data[0][0] = vStatus.r4.index",
+      "else:",
+      "    if 'qualified' in markers:",
+      "        data[0][0] = vStatus.r3.index",
+      "    elif 'OQ' in markers:",
+      "        data[0][0] = vStatus.r2.index",
+      "    else:",
+      "        data[0][0] = vStatus.r1.index",
+      "</virtual>",
+      "  <row label=\"r1\">Terminate</row>",
+      "  <row label=\"r2\">OverQuota</row>",
+      "  <row label=\"r3\">Qualified</row>",
+      "  <row label=\"r4\">Partial</row>",
+      "</radio>",
+      "$3",
+      ""
+    ]
+  },
+  "vchange": {
+    "prefix": "vchange",
+    "body": [
+      "<radio label=\"vChange\" title=\"Change\">",
+      "<virtual>",
+      "if '${1:change_20130618}' in markers:",
+      "    data[0][0] = vChange.r2.index",
+      "else:",
+      "    data[0][0] = vChange.r1.index",
+      "</virtual>",
+      "  <row label=\"r1\">Old Survey</row>",
+      "  <row label=\"r2\">${2:06/18/2013} - Change</row>",
+      "</radio>",
+      "$3",
+      ""
+    ]
+  },
+  "dblock": {
+    "prefix": "dblock",
+    "body": [
+      "<exec when=\"init\">db = Database(\"invited.txt\")</exec>",
+      "<marker name=\"lockme\" cond=\"list in [ '7' ]\"/><!-- update this part, for more complex locking -->",
+      "",
+      "<html final=\"1\" cond=\"hasMarker('lockme') and not db.valid(source)\" label=\"invited_not\" where=\"survey\">\\${hlang.get(\"invited.not\")\\}</html>",
+      "<html final=\"1\" cond=\"hasMarker('lockme') and db.inuse(source)\" label=\"invited_inprogress\" where=\"survey\">\\${hlang.get(\"invited.inprogress\")\\}</html>",
+      "<html final=\"1\" cond=\"hasMarker('lockme') and db.has(source)\" label=\"invited_used\" where=\"survey\">\\${hlang.get(\"invited.used\")\\}</html>",
+      "",
+      "<exec when=\"finished\">if hasMarker('lockme'):  db.add(source)</exec>",
+      ""
+    ]
+  },
+  "vrandom": {
+    "prefix": "vrandom",
+    "body": [
+      "<number label='vRandom' size='1' title='Order of elements'>",
+      "  <virtual>assignRandomOrder('$1', 'children')</virtual>",
+      "  <row label='$2'>$3</row>",
+      "  <row label='$4'>$5</row>",
+      "</number>",
+      "$6"
+    ]
+  },
+  "noanswer": {
+    "prefix": "noanswer",
+    "body": "  <noanswer label=\"${1:r2}\">${2:Don't know}</noanswer>"
+  },
+  "agenets": {
+    "prefix": "agenets",
+    "body": "  <nets>14-17,18-24,25-34,35-44,45-54,55-65</nets>"
+  },
+  "sb": {
+    "prefix": "sb",
+    "body": " shuffleBy=\"${1:Q}\""
+  },
+  "oo": {
+    "prefix": "oo",
+    "body": " openOptional=\"1\""
+  },
+  "colleg": {
+    "prefix": "colleg",
+    "body": " colLegendRows=\"${1:}\""
+  },
+  "ppt": {
+    "prefix": "ppt",
+    "body": " style=\"prePostText\" cs:${1:postText}=\"\\${res.${2:foo}\\}\""
+  },
+  "style": {
+    "prefix": "style",
+    "body": " style=\"${1:style}\""
+  },
+  "verify": {
+    "prefix": "verify",
+    "body": " verify=\"range(${1:0},${2:100})\""
+  },
+  "onload": {
+    "prefix": "onload",
+    "body": " onLoad=\"copy('${1:Q}', rows=True${2:})\""
+  },
+  "zip": {
+    "prefix": "zip",
+    "body": " verify=\"zipcode\" size=\"5\""
+  },
+  "dir": {
+    "prefix": "dir",
+    "body": " ratingDirection=\"reverse\""
+  },
+  "rowcond": {
+    "prefix": "rowcond",
+    "body": " rowCond=\"${1:}\""
+  },
+  "colcond": {
+    "prefix": "colcond",
+    "body": " colCond=\"${1:}\""
+  },
+  "atmost": {
+    "prefix": "atmost",
+    "body": " atmost=\"$1\""
+  },
+  "atleast": {
+    "prefix": "atleast",
+    "body": " atleast=\"${1:1}\""
+  },
+  "cond": {
+    "prefix": "cond",
+    "body": " cond=\"$1\""
+  },
+  "unique": {
+    "prefix": "unique",
+    "body": " unique=\"1\""
+  },
+  "grouping": {
+    "prefix": "grouping",
+    "body": " grouping=\"cols\""
+  },
+  "rep": {
+    "prefix": "rep",
+    "body": " where=\"report\""
+  },
+  "sst": {
+    "prefix": "sst",
+    "body": " sst=\"0\""
+  },
+  "survey": {
+    "prefix": "survey",
+    "body": " where=\"survey,notdp\""
+  },
+  "notdp": {
+    "prefix": "notdp",
+    "body": " where=\"none,notdp\""
+  },
+  "where": {
+    "prefix": "where",
+    "body": " where=\"${1:survey,notdp}\""
+  },
+  "none": {
+    "prefix": "none",
+    "body": " where=\"none\""
+  },
+  "rightof": {
+    "prefix": "rightof",
+    "body": " rightOf=\"${1:}\""
+  },
+  "below": {
+    "prefix": "below",
+    "body": " below=\"${1:}\""
+  },
+  "bucket": {
+    "prefix": "bucket",
+    "body": " virtual=\"bucketize(co)\""
+  },
+  "sortrows": {
+    "prefix": "sortrows",
+    "body": " sortRows=\"${1:asc}\""
+  },
+  "size": {
+    "prefix": "size",
+    "body": " size=\"$1\""
+  },
+  "width": {
+    "prefix": "width",
+    "body": " width=\"$1\""
+  },
+  "adim": {
+    "prefix": "adim",
+    "body": " adim=\"${1:cols}\""
+  },
+  "alt": {
+    "prefix": "alt",
+    "body": " <alt>$1</alt>"
+  },
+  "rating": {
+    "prefix": "rating",
+    "body": " averages=\"cols\" values=\"order\" adim=\"rows\" type=\"rating\""
+  },
+  "otherlang": {
+    "prefix": "otherlang",
+    "body": " otherLanguages=\"$1\""
+  },
+  "mls": {
+    "prefix": "mls",
+    "body": " mls=\"${1:english}\""
+  },
+  "fav": {
+    "prefix": "fav",
+    "body": " onLoad=\"copy('${1:Q1}', rows=True)\" shuffle=\"rows\" shuffleBy=\"$1\" rowCond=\"$1[row]\""
+  },
+  "dref": {
+    "prefix": "dref",
+    "body": " dataRef=\"$1\""
+  },
+  "dsource": {
+    "prefix": "dsource",
+    "body": " dataSource=\"$1\""
+  },
+  "lock": {
+    "prefix": "lock",
+    "body": "<var name=\"source\" filename=\"invited.txt\" unique=\"1\"/>"
+  },
+  "var": {
+    "prefix": "var",
+    "body": "<var name=\"${1:foo}\" ${2:unique=\"1\"} ${3:required=\"1\"}/>"
+  },
+  "languages": {
+    "prefix": "languages",
+    "body": [
+      "<languages default=\"english\">",
+      "    <language name=\"english\" var=\"co\" value=\"us\"/>",
+      "    <language name=\"spanish\" var=\"co\" value=\"es\"/>",
+      "    <language name=\"german\"  var=\"co\" value=\"de\"/>",
+      "</languages>"
+    ]
+  },
+  "csextra": {
+    "prefix": "csextra",
+    "body": [
+      "<exec>",
+      "for r in ${1:virtual}.rows:",
+      "    if ${2:Q1}.check(r.styles.cs.extra):",
+      "        $1.val = r.index",
+      "        break",
+      "</exec>"
+    ]
+  },
+  "order": {
+    "prefix": "order",
+    "body": "<exec>${1:Q1}.${2:rows}.order = ${3:Q2}.${4:rows}.order</exec>"
+  },
+  "vquota": {
+    "prefix": "vquota",
+    "body": "v${1:Picked}.val = [int(m[len('/$1/'):].split('_')[0]) - 1 for m in p.markers if m.startswith('/$1/')][0]"
+  },
+  "cells": {
+    "prefix": "cells",
+    "body": "cells = gv.survey.root.quota.getQuotaCells()"
+  },
+  "setlang": {
+    "prefix": "setlang",
+    "body": [
+      "setLanguage('$1')",
+      ""
+    ]
+  },
+  "qtime": {
+    "prefix": "qtime",
+    "body": [
+      "<float cmsEditable=\"0\" label=\"qtime\" title=\"Total Interview Time\" where=\"report\"/>",
+      "<exec when=\"finished\">qtime.val = timeSpent()/60.0</exec>",
+      ""
+    ]
+  },
+  "loop": {
+    "prefix": "loop",
+    "body": [
+      "<loop label=\"$1\" vars=\"$2\" title=\"$3\" suspend=\"0\">",
+      "  <block label=\"$4\">",
+      "",
+      "  </block>",
+      "",
+      "  <looprow label=\"${5:1}\" cond=\"$6\">",
+      "    <loopvar name=\"$7\">$8</loopvar>",
+      "  </looprow>",
+      "</loop>",
+      "",
+      ""
+    ]
+  },
+  "timestamp": {
+    "prefix": "timestamp",
+    "body": [
+      "def save_time_stamp(q):    ",
+      "    \"\"\"",
+      "    Expects a text question and saves the current time stamp",
+      "    \"\"\"",
+      "    q.val = gv.survey.root.transformDate(time.time())"
+    ]
+  },
+  "flash_quote": {
+    "prefix": "flash_quote",
+    "body": [
+      "import urllib",
+      "",
+      "def flash_quote(string):",
+      "    \"\"\"",
+      "    Checks if flashDetected is True,",
+      "    If True, returns URL escaped string",
+      "    Else returns string unchanged",
+      "    \"\"\"",
+      "    if flashDetected:",
+      "        return urllib.quote(string)",
+      "    else:",
+      "        return string"
+    ]
+  },
+  "groupmap": {
+    "prefix": "groupmap",
+    "body": [
+      "def make_group_map(q):",
+      "    groupMap = {\\}",
+      "    for r in q.rows:",
+      "        group = groupMap.setdefault(r.group.label, [])",
+      "        group.append(r)",
+      "    return groupMap"
+    ]
+  },
+  "states": {
+    "prefix": "states",
+    "body": [
+      "<choice label=\"ch1\">Alabama</choice>",
+      "<choice label=\"ch2\">Alaska</choice>",
+      "<choice label=\"ch3\">Arizona</choice>",
+      "<choice label=\"ch4\">Arkansas</choice>",
+      "<choice label=\"ch5\">California</choice>",
+      "<choice label=\"ch6\">Colorado</choice>",
+      "<choice label=\"ch7\">Connecticut</choice>",
+      "<choice label=\"ch8\">Delaware</choice>",
+      "<choice label=\"ch9\">District of Columbia</choice>",
+      "<choice label=\"ch10\">Florida</choice>",
+      "<choice label=\"ch11\">Georgia</choice>",
+      "<choice label=\"ch12\">Hawaii</choice>",
+      "<choice label=\"ch13\">Idaho</choice>",
+      "<choice label=\"ch14\">Illinois</choice>",
+      "<choice label=\"ch15\">Indiana</choice>",
+      "<choice label=\"ch16\">Iowa</choice>",
+      "<choice label=\"ch17\">Kansas</choice>",
+      "<choice label=\"ch18\">Kentucky</choice>",
+      "<choice label=\"ch19\">Louisiana</choice>",
+      "<choice label=\"ch20\">Maine</choice>",
+      "<choice label=\"ch21\">Maryland</choice>",
+      "<choice label=\"ch22\">Massachusetts</choice>",
+      "<choice label=\"ch23\">Michigan</choice>",
+      "<choice label=\"ch24\">Minnesota</choice>",
+      "<choice label=\"ch25\">Mississippi</choice>",
+      "<choice label=\"ch26\">Missouri</choice>",
+      "<choice label=\"ch27\">Montana</choice>",
+      "<choice label=\"ch28\">Nebraska</choice>",
+      "<choice label=\"ch29\">Nevada</choice>",
+      "<choice label=\"ch30\">New Hampshire</choice>",
+      "<choice label=\"ch31\">New Jersey</choice>",
+      "<choice label=\"ch32\">New Mexico</choice>",
+      "<choice label=\"ch33\">New York</choice>",
+      "<choice label=\"ch34\">North Carolina</choice>",
+      "<choice label=\"ch35\">North Dakota</choice>",
+      "<choice label=\"ch36\">Ohio</choice>",
+      "<choice label=\"ch37\">Oklahoma</choice>",
+      "<choice label=\"ch38\">Oregon</choice>",
+      "<choice label=\"ch39\">Pennsylvania</choice>",
+      "<choice label=\"ch40\">Rhode Island</choice>",
+      "<choice label=\"ch41\">South Carolina</choice>",
+      "<choice label=\"ch42\">South Dakota</choice>",
+      "<choice label=\"ch43\">Tennessee</choice>",
+      "<choice label=\"ch44\">Texas</choice>",
+      "<choice label=\"ch45\">Utah</choice>",
+      "<choice label=\"ch46\">Vermont</choice>",
+      "<choice label=\"ch47\">Virginia</choice>",
+      "<choice label=\"ch48\">Washington</choice>",
+      "<choice label=\"ch49\">West Virginia</choice>",
+      "<choice label=\"ch50\">Wisconsin</choice>",
+      "<choice label=\"ch51\">Wyoming</choice>",
+      "",
+      ""
+    ]
+  },
+  "atm1d": {
+    "prefix": "atm1d",
+    "body": [
+      "  <uses>atm1d.${1:2}</uses>",
+      "$2"
+    ]
+  },
+  "atmtable": {
+    "prefix": "atmtable",
+    "body": [
+      "  <uses>atmtable.${1:1}</uses>",
+      "$2"
+    ]
+  },
+  "autosum": {
+    "prefix": "autosum",
+    "body": [
+      "  <uses>autosum.${1:5}</uses>",
+      "  <autosum:preText>$2</autosum:preText>",
+      "  <autosum:postText>$3</autosum:postText>",
+      "  <autosum:sumPreText>${4:Total:}</autosum:sumPreText>",
+      "  <autosum:amount>$5</autosum:amount>",
+      "$6"
+    ]
+  },
+  "bcme": {
+    "prefix": "bcme",
+    "body": [
+      "<textarea label=\"${1:Q1}\" optional=\"0\" size=\"25\">",
+      "  <title>${2:Title Text}</title>",
+      "  <comment>${3:Comment Text}</comment>",
+      "  <uses>bcme.${4:1}</uses>",
+      "  <bcme:video_id>$5</bcme:video_id>",
+      "  <bcme:width>${6:640}</bcme:width>",
+      "  <bcme:height>${7:360}</bcme:height>",
+      "  <bcme:pause_enable>${8:0}</bcme:pause_enable>",
+      "  <bcme:autostart>${9:0}</bcme:autostart>",
+      "  <bcme:autosubmit>${10:0}</bcme:autosubmit>",
+      "  <bcme:watermark>${11:}</bcme:watermark>",
+      "  <bcme:watermark_position>${12:Top Left}</bcme:watermark_position>",
+      "  <bcme:watermark_animated>${13:0}</bcme:watermark_animated>",
+      "  <bcme:slider_orientation>${14:Horizontal}</bcme:slider_orientation>",
+      "  <bcme:slider_min>${15:0}</bcme:slider_min>",
+      "  <bcme:slider_max>${16:100}</bcme:slider_max>",
+      "  <bcme:slider_range>${17:none}</bcme:slider_range>",
+      "  <bcme:slider_step>${18:1}</bcme:slider_step>",
+      "  <bcme:legend_left>${19:}</bcme:legend_left>",
+      "  <bcme:legend_middle>${20:}</bcme:legend_middle>",
+      "  <bcme:legend_right>${21:}</bcme:legend_right>",
+      "  <bcme:engagement_text>${22:Please use the slider to indicate your preference for the video.}</bcme:engagement_text>",
+      "  <bcme:engagement_time>${23:10}</bcme:engagement_time>",
+      "  <bcme:engagement_skin>${24:light}</bcme:engagement_skin>",
+      "</textarea>",
+      "<suspend/>"
+    ]
+  },
+  "bcvideo": {
+    "prefix": "bcvideo",
+    "body": [
+      "<checkbox label=\"${1:Q1}\" atleast=\"1\">",
+      "  <title>${2:Title Text}</title>",
+      "  <comment>${3:Comment Text}</comment>",
+      "  <uses>bcvideo.${4:1}</uses>",
+      "  <bcvideo:video_id>$5</bcvideo:video_id>",
+      "  <bcvideo:width>${6:640}</bcvideo:width>",
+      "  <bcvideo:height>${7:360}</bcvideo:height>",
+      "  <bcvideo:pause_enable>${8:0}</bcvideo:pause_enable>",
+      "  <bcvideo:replay_enable>${9:0}</bcvideo:replay_enable>",
+      "  <bcvideo:autostart>${10:0}</bcvideo:autostart>",
+      "  <bcvideo:autosubmit>${11:0}</bcvideo:autosubmit>",
+      "  <bcvideo:allow_fullscreen>${12:0}</bcvideo:allow_fullscreen>",
+      "  <bcvideo:chromeless_video>${13:1}</bcvideo:chromeless_video>",
+      "  <bcvideo:watermark>$14</bcvideo:watermark>",
+      "  <bcvideo:watermark_position>${15:Top Left}</bcvideo:watermark_position>",
+      "  <bcvideo:watermark_animated>${16:0}</bcvideo:watermark_animated>",
+      "</checkbox>",
+      "<suspend/>"
+    ]
+  },
+  "cardsort": {
+    "prefix": "cardsort",
+    "body": [
+      "  <uses>cardsort.${1:2}</uses>",
+      "  <cardsort:buttonPreviousHTML>${2:<i class='fa-icon-chevron-left'></i> Prev}</cardsort:buttonPreviousHTML>",
+      "  <cardsort:buttonNextHTML>${3:Next <i class='fa-icon-chevron-right'></i>}</cardsort:buttonNextHTML> ",
+      "  <cardsort:completionHTML>${4:<b>All done!</b><br/><i>Click the \"Continue\" button to proceed.</i>}</cardsort:completionHTML>",
+      "$5"
+    ]
+  },
+  "clickabletext": {
+    "prefix": "clickabletext",
+    "body": [
+      "  <uses>clickabletext.${1:1}</uses>",
+      "$2"
+    ]
+  },
+  "clickabletexttoggle": {
+    "prefix": "clickabletexttoggle",
+    "body": [
+      "  <uses>clickabletexttoggle.${1:1}</uses>",
+      "$2"
+    ]
+  },
+  "fancyboxes": {
+    "prefix": "fancyboxes",
+    "body": [
+      "  <uses>fancyboxes.${1:1}</uses>",
+      "$2"
+    ]
+  },
+  "fir": {
+    "prefix": "fir",
+    "body": [
+      "  <uses>fir.${1:1}</uses>",
+      "  <fir:image_radio_css>$2</fir:image_radio_css>",
+      "  <fir:image_checkbox_css>$3</fir:image_checkbox_css>",
+      "$4"
+    ]
+  },
+  "greyout": {
+    "prefix": "greyout",
+    "body": [
+      "  <uses>greyout.${1:1}</uses>",
+      "$2"
+    ]
+  },
+  "heatclick": {
+    "prefix": "heatclick",
+    "body": [
+      "  <uses>heatclick.${1:1}</uses>",
+      "  <heatclick:image>$2</heatclick:image>",
+      "  <heatclick:bugimage>$3</heatclick:bugimage>",
+      "  <heatclick:continue_text>${4:Continue}</heatclick:continue_text>",
+      "  <heatclick:reset_text>${5:Reset}</heatclick:reset_text>",
+      "  <heatclick:optout_text>$6</heatclick:optout_text>",
+      "  <heatclick:width>${7:700}</heatclick:width>",
+      "  <heatclick:height>${8:500}</heatclick:height>",
+      "  <heatclick:bugwidth>${9:10}</heatclick:bugwidth>",
+      "  <heatclick:bugheight>${10:10}</heatclick:bugheight>",
+      "  <heatclick:max>${11:999}</heatclick:max>",
+      "  <heatclick:min>${12:0}</heatclick:min>",
+      "$13"
+    ]
+  },
+  "hotspot": {
+    "prefix": "hotspot",
+    "body": [
+      "  <uses>hotspot.${1:1}</uses>",
+      "  <hotspot:image>$2</hotspot:image>",
+      "  <hotspot:imageWidth>$3</hotspot:imageWidth>",
+      "  <hotspot:imageHeight>$4</hotspot:imageHeight>",
+      "$5"
+    ]
+  },
+  "hotspotrow": {
+    "prefix": "hotspotrow",
+    "body": [
+      "  <hotspot:shape>${1:rect}</hotspot:shape>",
+      "  <hotspot:coordinates>$2</hotspot:coordinates>",
+      "  <hotspot:fillColor>${3:#76dd71}</hotspot:fillColor>",
+      "$4"
+    ]
+  },
+  "hotspottoggle": {
+    "prefix": "hotspottoggle",
+    "body": [
+      "  <uses>hotspottoggle.${1:1}</uses>",
+      "  <hotspottoggle:image>$2</hotspottoggle:image>",
+      "  <hotspottoggle:imageWidth>$3</hotspottoggle:imageWidth>",
+      "  <hotspottoggle:imageHeight>$4</hotspottoggle:imageHeight>",
+      "  <hotspottoggle:requiredAnswers>${5:1}</hotspottoggle:requiredAnswers>",
+      "$6"
+    ]
+  },
+  "hotspottogglerow": {
+    "prefix": "hotspottogglerow",
+    "body": [
+      "  <hotspottoggle:shape>${1:rect}</hotspottoggle:shape>",
+      "  <hotspottoggle:coordinates>$2</hotspottoggle:coordinates>",
+      "  <hotspottoggle:fillColor>${3:#76dd71}</hotspottoggle:fillColor>",
+      "$4"
+    ]
+  },
+  "hottext": {
+    "prefix": "hottext",
+    "body": [
+      "<select label=\"${1:Q1}\" optional=\"1\">",
+      "  <title>${2:Title Text}</title>",
+      "  <comment>${3:Comment Text}</comment>",
+      "  <uses>hottext.${4:1}</uses>",
+      "  <hottext:atleast>${5:1}</hottext:atleast>",
+      "  <hottext:atmost>${6:9999}</hottext:atmost>",
+      "  <choice label=\"ch1\">${7:Like}</choice>",
+      "  <choice label=\"ch2\">${8:Neutral}</choice>",
+      "  <choice label=\"ch3\">${9:Dislike}</choice>",
+      "  <row label=\"r1\">Update</row>",
+      "  <row label=\"r2\">With</row>",
+      "  <row label=\"r3\">Actual</row>",
+      "  <row label=\"r4\">Hot</row>",
+      "  <row label=\"r5\">Text</row>",
+      "  <row label=\"r6\">Rows</row>",
+      "  <noanswer label=\"na1\">${10:Prefer not to answer}</noanswer>",
+      "</select>",
+      "<suspend/>"
+    ]
+  },
+  "imgmap": {
+    "prefix": "imgmap",
+    "body": [
+      "<textarea label=\"${1:Q1}\" optional=\"0\" size=\"25\">",
+      "  <title>${2:Title Text}</title>",
+      "  <comment>${3:Comment Text}</comment>",
+      "  <uses>imgmap.${4:1}</uses>",
+      "  <imgmap:image>${5:image.png}</imgmap:image>",
+      "  <imgmap:loading>${6:Loading...}</imgmap:loading>",
+      "  <col label=\"c1\">${7:Like}</col>",
+      "  <col label=\"c2\">${8:Neutral}</col>",
+      "  <col label=\"c3\">${9:Dislike}</col>",
+      "  <noanswer label=\"na1\">${10:Prefer not to answer}</noanswer>",
+      "</textarea>",
+      "<suspend/>"
+    ]
+  },
+  "leftright": {
+    "prefix": "leftright",
+    "body": [
+      "  <uses>leftright.${1:1}</uses>",
+      "$2"
+    ]
+  },
+  "multicol": {
+    "prefix": "multicol",
+    "body": [
+      "  <uses>multicol.${1:2}</uses>",
+      "  <multicol:flow>${2:vertical}</multicol:flow>",
+      "  <multicol:count>${3:2}</multicol:count>",
+      "$4"
+    ]
+  },
+  "onerowatatime": {
+    "prefix": "onerowatatime",
+    "body": [
+      "  <uses>onerowatatime.${1:1}</uses>",
+      "$2"
+    ]
+  },
+  "ranksort": {
+    "prefix": "ranksort",
+    "body": [
+      "  <uses>ranksort.${1:1}</uses>",
+      "  <ranksort:showBucketText>${2:1}</ranksort:showBucketText>",
+      "  <ranksort:showBucketNumber>${3:1}</ranksort:showBucketNumber>",
+      "$4"
+    ]
+  },
+  "ratingscale": {
+    "prefix": "ratingscale",
+    "body": [
+      "  <uses>ratingscale.${1:1}</uses>",
+      "  <ratingscale:bubble_size>${2:38}</ratingscale:bubble_size>",
+      "  <ratingscale:bubble_img>${3:/survey/lib/steam/ratingscale/v1/ratingscale-both.png}</ratingscale:bubble_img>",
+      "  <ratingscale:hide_radio>${4:0}</ratingscale:hide_radio>",
+      "  <ratingscale:radio_img_size>${5:0}</ratingscale:radio_img_size>",
+      "  <ratingscale:radio_img>${6:/survey/lib/steam/ratingscale/v1/ratingscale-empty.png}</ratingscale:radio_img>",
+      "  <ratingscale:radio_selected_img>$7</ratingscale:radio_selected_img>",
+      "  <ratingscale:radio_img_transition>${8:0}</ratingscale:radio_img_transition>",
+      "$9"
+    ]
+  },
+  "scroll": {
+    "prefix": "scroll",
+    "body": [
+      "  <uses>scroll.${1:1}</uses>",
+      "  <scroll:height>${2:200px}</scroll:height>",
+      "$3"
+    ]
+  },
+  "separator": {
+    "prefix": "separator",
+    "body": [
+      "  <uses>separator.${1:1}</uses>",
+      "  <separator:elements>$2</separator:elements>",
+      "  <separator:space>$3</separator:space>",
+      "  <separator:color>$4</separator:color>",
+      "$5"
+    ]
+  },
+  "slidernumber": {
+    "prefix": "slidernumber",
+    "body": [
+      "  <uses>slidernumber.${1:2}</uses>",
+      "  <slidernumber:sliderPosition>${2:Off Scale}</slidernumber:sliderPosition>",
+      "  <slidernumber:step>${3:1}</slidernumber:step>",
+      "  <slidernumber:legendPosition>${4:Below Slider}</slidernumber:legendPosition>",
+      "  <slidernumber:leftLegend>$5</slidernumber:leftLegend>",
+      "  <slidernumber:midLegend>$6</slidernumber:midLegend>",
+      "  <slidernumber:rightLegend>$7</slidernumber:rightLegend>",
+      "  <slidernumber:showValue>${8:Above Slider}</slidernumber:showValue>",
+      "  <slidernumber:preText>$9</slidernumber:preText>",
+      "  <slidernumber:postText>$10</slidernumber:postText>",
+      "  <slidernumber:editable>${11:1}</slidernumber:editable>",
+      "  <slidernumber:showRange>${12:1}</slidernumber:showRange>",
+      "  <slidernumber:OO_Text>$13</slidernumber:OO_Text>",
+      "  <slidernumber:offScaleText>$14</slidernumber:offScaleText>",
+      "$15"
+    ]
+  },
+  "starrating": {
+    "prefix": "starrating",
+    "body": [
+      "  <uses>starrating.${1:1}</uses>",
+      "  <starrating:tooltips>${2:1}</starrating:tooltips>",
+      "$3",
+      ""
+    ]
+  },
+  "MAC_sectiontime": {
+    "prefix": "MAC_sectiontime",
+    "body": [
+      "<float ",
+      "  label=\"x_$1_DURATION_start\"",
+      "  size=\"20\"",
+      "  translateable=\"0\"",
+      "  where=\"none\">",
+      "  <title>Total time start</title>",
+      "</float>",
+      "",
+      "<suspend/>",
+      "<exec>",
+      "x_$1_DURATION_start.val = timeSpent()",
+      "</exec>",
+      "",
+      "$3",
+      "",
+      "<number ",
+      "  label=\"x_$1_DURATION\"",
+      "  size=\"20\"",
+      "  translateable=\"0\"",
+      "  where=\"execute,survey,report\">",
+      "  <title>Total time spent in $2</title>",
+      "  <exec>",
+      "x_$1_DURATION.val  = int(round((timeSpent() - x_$1_DURATION_start.ival),0))",
+      "  </exec>",
+      "",
+      "</number>",
+      "",
+      "<suspend/>"
+    ]
+  }
+}

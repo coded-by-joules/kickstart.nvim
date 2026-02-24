@@ -2,4 +2,7 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
-return {}
+return {
+  'https://github.com/coded-by-joules/decipher-vim-clips.git',
+  'dcampos/nvim-snippy',
+}

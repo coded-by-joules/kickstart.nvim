@@ -87,11 +87,11 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -230,6 +230,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function() vim.hl.on_yank() end,
 })
 
+-- additional keymaps
+require 'custom.keymaps'
+
+-- additional settings
+require 'custom.options'
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -323,6 +329,12 @@ require('lazy').setup({
   -- you do for a plugin at the top level, you can do for a dependency.
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
+  --
+  --
+  --
+  {
+    'tpope/vim-fugitive',
+  },
 
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -389,6 +401,10 @@ require('lazy').setup({
         -- pickers = {}
         extensions = {
           ['ui-select'] = { require('telescope.themes').get_dropdown() },
+        },
+        file_ignore_patterns = {
+          'node_modules',
+          '.git',
         },
       }
 
@@ -470,6 +486,157 @@ require('lazy').setup({
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
     end,
+  },
+
+  -- Explorer sidebar
+  {
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
+    lazy = false,
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function() require('nvim-tree').setup {} end,
+  },
+  -- Tab Bar
+  {
+    'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    init = function() vim.g.barbar_auto_setup = false end,
+    opts = {
+      -- Enable/disable animations
+      animation = true,
+
+      -- Automatically hide the tabline when there are this many buffers left.
+      -- Set to any value >=0 to enable.
+      auto_hide = false,
+
+      -- Enable/disable current/total tabpages indicator (top right corner)
+      tabpages = true,
+
+      -- Enables/disable clickable tabs
+      --  - left-click: go to buffer
+      --  - middle-click: delete buffer
+      clickable = true,
+
+      -- Excludes buffers from the tabline
+      exclude_ft = { 'javascript' },
+      exclude_name = { 'package.json' },
+
+      -- A buffer to this direction will be focused (if it exists) when closing the current buffer.
+      -- Valid options are 'left' (the default), 'previous', and 'right'
+      focus_on_close = 'left',
+
+      -- Hide inactive buffers and file extensions. Other options are `alternate`, `current`, and `visible`.
+      hide = { extensions = true },
+
+      -- Disable highlighting alternate buffers
+      highlight_alternate = false,
+
+      -- Disable highlighting file icons in inactive buffers
+      highlight_inactive_file_icons = false,
+
+      -- Enable highlighting visible buffers
+      highlight_visible = true,
+
+      icons = {
+        -- Configure the base icons on the bufferline.
+        -- Valid options to display the buffer index and -number are `true`, 'superscript' and 'subscript'
+        buffer_index = false,
+        buffer_number = false,
+        button = '',
+        -- Enables / disables diagnostic symbols
+        diagnostics = {
+          [vim.diagnostic.severity.ERROR] = { enabled = true, icon = 'ﬀ' },
+          [vim.diagnostic.severity.WARN] = { enabled = false },
+          [vim.diagnostic.severity.INFO] = { enabled = false },
+          [vim.diagnostic.severity.HINT] = { enabled = true },
+        },
+        gitsigns = {
+          added = { enabled = true, icon = '+' },
+          changed = { enabled = true, icon = '~' },
+          deleted = { enabled = true, icon = '-' },
+        },
+        filetype = {
+          -- Sets the icon's highlight group.
+          -- If false, will use nvim-web-devicons colors
+          custom_colors = false,
+
+          -- Requires `nvim-web-devicons` if `true`
+          enabled = true,
+        },
+        separator = { left = '▎', right = '' },
+
+        -- If true, add an additional separator at the end of the buffer list
+        separator_at_end = true,
+
+        -- Configure the icons on the bufferline when modified or pinned.
+        -- Supports all the base icon options.
+        modified = { button = '●' },
+        pinned = { button = '', filename = true },
+
+        -- Use a preconfigured buffer appearance— can be 'default', 'powerline', or 'slanted'
+        preset = 'default',
+
+        -- Configure the icons on the bufferline based on the visibility of a buffer.
+        -- Supports all the base icon options, plus `modified` and `pinned`.
+        alternate = { filetype = { enabled = false } },
+        current = { buffer_index = true },
+        inactive = { button = '×' },
+        visible = { modified = { buffer_number = false } },
+      },
+
+      -- If true, new buffers will be inserted at the start/end of the list.
+      -- Default is to insert after current buffer.
+      insert_at_end = false,
+      insert_at_start = false,
+
+      -- Sets the maximum padding width with which to surround each tab
+      maximum_padding = 1,
+
+      -- Sets the minimum padding width with which to surround each tab
+      minimum_padding = 1,
+
+      -- Sets the maximum buffer name length.
+      maximum_length = 30,
+
+      -- Sets the minimum buffer name length.
+      minimum_length = 0,
+
+      -- If set, the letters for each buffer in buffer-pick mode will be
+      -- assigned based on their name. Otherwise or in case all letters are
+      -- already assigned, the behavior is to assign letters in order of
+      -- usability (see order below)
+      semantic_letters = true,
+
+      -- Set the filetypes which barbar will offset itself for
+      sidebar_filetypes = {
+        -- Use the default values: {event = 'BufWinLeave', text = '', align = 'left'}
+        NvimTree = true,
+        -- Or, specify the text used for the offset:
+        undotree = {
+          text = 'undotree',
+          align = 'center', -- *optionally* specify an alignment (either 'left', 'center', or 'right')
+        },
+        -- Or, specify the event which the sidebar executes when leaving:
+        ['neo-tree'] = { event = 'BufWipeout' },
+        -- Or, specify all three
+        Outline = { event = 'BufWinLeave', text = 'symbols-outline', align = 'right' },
+      },
+
+      -- New buffer letters are assigned in this order. This order is
+      -- optimal for the qwerty keyboard layout but might need adjustment
+      -- for other layouts.
+      letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
+
+      -- Sets the name of unnamed buffers. By default format is "[Buffer X]"
+      -- where X is the buffer number. But only a static string is accepted here.
+      no_name_title = nil,
+    },
+    version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
 
   -- LSP Plugins
@@ -614,8 +781,11 @@ require('lazy').setup({
       -- You can press `g?` for help in this menu.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'lua_ls', -- Lua Language server
+        'lua-language-server', -- Lua Language server
         'stylua', -- Used to format Lua code
+        'vim-language-server',
+        'typescript-language-server',
+        'python-lsp-server',
         -- You can add other tools here that you want Mason to install
       })
 
@@ -628,7 +798,7 @@ require('lazy').setup({
       end
 
       -- Special Lua Config, as recommended by neovim help docs
-      vim.lsp.config('lua_ls', {
+      vim.lsp.config('lua-language-server', {
         on_init = function(client)
           if client.workspace_folders then
             local path = client.workspace_folders[1].name
@@ -652,7 +822,34 @@ require('lazy').setup({
           Lua = {},
         },
       })
-      vim.lsp.enable 'lua_ls'
+
+      -- Python config
+      vim.lsp.config('pylsp', {
+        settings = {
+          pylsp = {
+            plugins = {
+              pyflakes = { enabled = false },
+              pycodestyle = { enabled = false },
+              pylint = { enabled = false },
+              flake8 = { enabled = false },
+              mccabe = { enabled = false },
+            },
+          },
+        },
+      })
+
+      -- Ruff configuration
+      vim.lsp.config('ruff', {
+        init_options = {
+          settings = {
+            lint = { enable = true },
+          },
+        },
+      })
+
+      vim.lsp.enable 'lua-language-server'
+      vim.lsp.enable 'pylsp'
+      vim.lsp.enable 'ruff'
     end,
   },
 
@@ -695,66 +892,66 @@ require('lazy').setup({
     },
   },
 
-  { -- Autocompletion
+  -- Snip Mate Converter
+  -- {
+  --   'smjonas/snippet-converter.nvim',
+  --   -- SnippetConverter uses semantic versioning. Example: use version = "1.*" to avoid breaking changes on version 1.
+  --   -- Uncomment the next line to follow stable releases only.
+  --   -- tag = "*",
+  --   config = function()
+  --     local template = {
+  --       -- name = "t1", (optionally give your template a name to refer to it in the `ConvertSnippets` command)
+  --       sources = {
+  --         snipmate = {
+  --           vim.fn.stdpath 'config' .. '/snippets',
+  --         },
+  --       },
+  --       output = {
+  --         -- Specify the output formats and paths
+  --         vscode_luasnip = {
+  --           vim.fn.stdpath 'config' .. '/snippets',
+  --         },
+  --       },
+  --     }
+
+  --     require('snippet_converter').setup {
+  --       templates = { template },
+  --       -- To change the default settings (see configuration section in the documentation)
+  --       -- settings = {},
+  --     }
+  --   end,
+  -- },
+
+  { -- Auto completion
     'saghen/blink.cmp',
-    event = 'VimEnter',
-    version = '1.*',
     dependencies = {
       -- Snippet Engine
-      {
-        'L3MON4D3/LuaSnip',
-        version = '2.*',
-        build = (function()
-          -- Build Step is needed for regex support in snippets.
-          -- This step is not supported in many windows environments.
-          -- Remove the below condition to re-enable on windows.
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then return end
-          return 'make install_jsregexp'
-        end)(),
-        dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
-        },
-        opts = {},
-      },
+      'rafamadriz/friendly-snippets',
     },
-    --- @module 'blink.cmp'
-    --- @type blink.cmp.Config
-    opts = {
-      keymap = {
-        -- 'default' (recommended) for mappings similar to built-in completions
-        --   <c-y> to accept ([y]es) the completion.
-        --    This will auto-import if your LSP supports it.
-        --    This will expand snippets if the LSP sent a snippet.
-        -- 'super-tab' for tab to accept
-        -- 'enter' for enter to accept
-        -- 'none' for no mappings
-        --
-        -- For an understanding of why the 'default' preset is recommended,
-        -- you will need to read `:help ins-completion`
-        --
-        -- No, but seriously. Please read `:help ins-completion`, it is really good!
-        --
-        -- All presets have the following mappings:
-        -- <tab>/<s-tab>: move to right/left of your snippet expansion
-        -- <c-space>: Open menu or open docs if already open
-        -- <c-n>/<c-p> or <up>/<down>: Select next/previous item
-        -- <c-e>: Hide menu
-        -- <c-k>: Toggle signature help
-        --
-        -- See :h blink-cmp-config-keymap for defining your own keymap
-        preset = 'default',
 
-        -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-        --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
-      },
+    -- use a release tag to download pre-built binaries
+    version = '1.*',
+    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+    -- build = 'cargo build --release',
+    -- If you use nix, you can build from source using latest nightly rust with:
+    -- build = 'nix run .#build-plugin',
+
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
+      -- 'super-tab' for mappings similar to vscode (tab to accept)
+      -- 'enter' for enter to accept
+      -- 'none' for no mappings
+      --
+      -- All presets have the following mappings:
+      -- C-space: Open menu or open docs if already open
+      -- C-n/C-p or Up/Down: Select next/previous item
+      -- C-e: Hide menu
+      -- C-k: Toggle signature help (if signature.enabled = true)
+      --
+      -- See :h blink-cmp-config-keymap for defining your own keymap
+      keymap = { preset = 'default' },
 
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
@@ -762,29 +959,23 @@ require('lazy').setup({
         nerd_font_variant = 'mono',
       },
 
-      completion = {
-        -- By default, you may press `<c-space>` to show the documentation.
-        -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
-      },
+      -- (Default) Only show the documentation popup when manually triggered
+      completion = { documentation = { auto_show = false } },
 
-      sources = {
-        default = { 'lsp', 'path', 'snippets' },
-      },
-
-      snippets = { preset = 'luasnip' },
-
-      -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
-      -- which automatically downloads a prebuilt binary when enabled.
-      --
-      -- By default, we use the Lua implementation instead, but you may enable
-      -- the rust implementation via `'prefer_rust_with_warning'`
-      --
-      -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'lua' },
-
-      -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },
+
+      -- Default list of enabled providers defined so that you can extend it
+      -- elsewhere in your config, without redefining it, due to `opts_extend`
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+      },
+
+      -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
+      -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+      -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+      --
+      -- See the fuzzy documentation for more information
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
     },
   },
 
@@ -852,7 +1043,7 @@ require('lazy').setup({
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     config = function()
-      local filetypes = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local filetypes = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'python', 'javascript' }
       require('nvim-treesitter').install(filetypes)
       vim.api.nvim_create_autocmd('FileType', {
         pattern = filetypes,
@@ -881,7 +1072,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
