@@ -1,5 +1,16 @@
 # kickstart.nvim
 
+
+## THIS IS CUSTOMIZED USING MY SETUP. THE FOLLOWING ARE PRE REQUISITES WHEN USING THIS CONFIG
+
+* Nerdfont
+* VS Build Tools
+* Git
+* Treesitter CLI
+
+Other prerequisites will be listed below
+
+
 ## Introduction
 
 A starting point for Neovim that is:
